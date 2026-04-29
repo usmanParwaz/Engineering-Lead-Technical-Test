@@ -1,0 +1,74 @@
+01:10:35 | INFO     | main | Document QA API starting up...
+01:10:51 | INFO     | services.rag.embedder | Importing sentence-transformers (PyTorch load — may take 30-60 s)…
+01:10:57 | INFO     | services.rag.embedder | Loading embedding model 'all-MiniLM-L6-v2'…
+01:10:57 | INFO     | sentence_transformers.base.model | No device provided, using cpu
+01:10:58 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json "HTTP/1.1 307 Temporary Redirect"
+01:10:58 | WARNING  | huggingface_hub.utils._http | Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+01:10:58 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/modules.json "HTTP/1.1 200 OK"
+01:10:58 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/config_sentence_transformers.json "HTTP/1.1 307 Temporary Redirect"
+01:10:58 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/config_sentence_transformers.json "HTTP/1.1 200 OK"
+01:10:58 | INFO     | sentence_transformers.base.model | Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
+01:10:59 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/config_sentence_transformers.json "HTTP/1.1 307 Temporary Redirect"
+01:10:59 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/config_sentence_transformers.json "HTTP/1.1 200 OK"
+01:10:59 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+01:10:59 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/README.md "HTTP/1.1 200 OK"
+01:11:00 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json "HTTP/1.1 307 Temporary Redirect"
+01:11:00 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/modules.json "HTTP/1.1 200 OK"
+01:11:00 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/sentence_bert_config.json "HTTP/1.1 307 Temporary Redirect"
+01:11:00 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/sentence_bert_config.json "HTTP/1.1 200 OK"
+01:11:00 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json "HTTP/1.1 404 Not Found"
+01:11:01 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+01:11:01 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/config.json "HTTP/1.1 200 OK"
+01:11:01 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+01:11:02 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+01:11:02 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/video_preprocessor_config.json "HTTP/1.1 404 Not Found"
+01:11:03 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+01:11:03 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+01:11:03 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/tokenizer_config.json "HTTP/1.1 200 OK"
+01:11:03 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+01:11:03 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/config.json "HTTP/1.1 200 OK"
+01:11:04 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+01:11:04 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/config.json "HTTP/1.1 200 OK"
+01:11:04 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+01:11:04 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/tokenizer_config.json "HTTP/1.1 200 OK"
+01:11:05 | INFO     | httpx | HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/all-MiniLM-L6-v2/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+01:11:05 | INFO     | httpx | HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/all-MiniLM-L6-v2/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+01:11:05 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/1_Pooling/config.json "HTTP/1.1 307 Temporary Redirect"
+01:11:06 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/1_Pooling%2Fconfig.json "HTTP/1.1 200 OK"
+01:11:06 | INFO     | httpx | HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/all-MiniLM-L6-v2 "HTTP/1.1 200 OK"
+01:11:06 | INFO     | services.rag.embedder | Embedding model ready: 'all-MiniLM-L6-v2' (dim=384)
+01:11:06 | INFO     | faiss.loader | Loading faiss with AVX2 support.
+01:11:06 | INFO     | faiss.loader | Successfully loaded faiss with AVX2 support.
+01:11:06 | INFO     | services.rag.vector_store | Restored '27fead2b-1ce7-4c32-8bb7-d892a45a4f3d.pdf' from disk (1 chunks)
+01:11:06 | INFO     | services.rag.vector_store | Restored '27fead2b-1ce7-4c32-8bb7-d892a45a4f3d.pdf' from disk (1 chunks)
+INFO:     127.0.0.1:59381 - "GET /health HTTP/1.1" 200 OK
+01:12:12 | INFO     | services.rag.pipeline | Ingesting 'test.txt' (479 bytes)
+01:12:12 | INFO     | services.rag.pipeline | Created 1 chunks from 'test.txt'
+01:12:12 | INFO     | services.rag.embedder | Embedded 1 texts using all-MiniLM-L6-v2
+01:12:12 | INFO     | services.rag.vector_store | Persisted 'test.txt' to data\2cd1a27e-bdd8-439c-b522-757b9ce85975
+INFO:     127.0.0.1:62396 - "POST /ingest HTTP/1.1" 201 Created
+01:12:39 | INFO     | httpx | HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+01:12:39 | INFO     | services.rag.llm | LLM answered question (input_tokens=510, output_tokens=81)
+INFO:     127.0.0.1:63974 - "POST /ask HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63982 - "GET / HTTP/1.1" 307 Temporary Redirect
+INFO:     127.0.0.1:63982 - "GET /ui HTTP/1.1" 307 Temporary Redirect
+INFO:     127.0.0.1:63982 - "GET /ui/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63984 - "GET /docs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50886 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50886 - "GET /documents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49562 - "GET / HTTP/1.1" 307 Temporary Redirect
+INFO:     127.0.0.1:49562 - "GET /ui HTTP/1.1" 307 Temporary Redirect
+INFO:     127.0.0.1:49562 - "GET /ui/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49562 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60449 - "GET /documents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60449 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+01:14:44 | INFO     | services.rag.pipeline | Ingesting '27fead2b-1ce7-4c32-8bb7-d892a45a4f3d.pdf' (14165 bytes)
+01:14:44 | INFO     | services.rag.pipeline | Created 1 chunks from '27fead2b-1ce7-4c32-8bb7-d892a45a4f3d.pdf'
+01:14:44 | INFO     | services.rag.embedder | Embedded 1 texts using all-MiniLM-L6-v2
+01:14:44 | INFO     | services.rag.vector_store | Persisted '27fead2b-1ce7-4c32-8bb7-d892a45a4f3d.pdf' to data\14a17a5e-c53f-4277-8206-a6b43480c438
+INFO:     127.0.0.1:54584 - "POST /ingest HTTP/1.1" 201 Created
+INFO:     127.0.0.1:54584 - "GET /documents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54584 - "GET /health HTTP/1.1" 200 OK
+01:14:56 | INFO     | httpx | HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+01:14:56 | INFO     | services.rag.llm | LLM answered question (input_tokens=643, output_tokens=87)
+INFO:     127.0.0.1:62439 - "POST /ask HTTP/1.1" 200 OK

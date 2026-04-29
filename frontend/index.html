@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DocQA — Document Intelligence</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0a0f;
+      --surface: #12121a;
+      --border: #1e1e2e;
+      --accent: #7c6af7;
+      --accent-dim: rgba(124, 106, 247, 0.12);
+      --green: #50fa7b;
+      --yellow: #f1fa8c;
+      --red: #ff5555;
+      --text: #cdd6f4;
+      --text-dim: #6c7086;
+      --text-bright: #ffffff;
+      --mono: 'IBM Plex Mono', monospace;
+      --sans: 'IBM Plex Sans', sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ---------- Header ---------- */
+    header {
+      border-bottom: 1px solid var(--border);
+      padding: 18px 32px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: var(--surface);
+    }
+
+    .logo-mark {
+      width: 32px; height: 32px;
+      background: var(--accent);
+      border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--mono);
+      font-size: 14px; font-weight: 600;
+      color: #fff;
+      flex-shrink: 0;
+    }
+
+    header h1 {
+      font-family: var(--mono);
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text-bright);
+      letter-spacing: 0.02em;
+    }
+
+    .status-pill {
+      margin-left: auto;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--text-dim);
+      background: var(--border);
+      padding: 4px 10px;
+      border-radius: 100px;
+      display: flex; align-items: center; gap: 6px;
+    }
+
+    .status-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--green);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    /* ---------- Layout ---------- */
+    .container {
+      flex: 1;
+      max-width: 900px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 40px 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    /* ---------- Cards ---------- */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .card-header {
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .card-header .icon {
+      color: var(--accent);
+      font-size: 14px;
+    }
+
+    .card-body { padding: 20px; }
+
+    /* ---------- Upload Zone ---------- */
+    .upload-zone {
+      border: 1.5px dashed var(--border);
+      border-radius: 8px;
+      padding: 36px 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      position: relative;
+    }
+
+    .upload-zone:hover, .upload-zone.drag-over {
+      border-color: var(--accent);
+      background: var(--accent-dim);
+    }
+
+    .upload-zone input[type=file] {
+      position: absolute; inset: 0;
+      opacity: 0; cursor: pointer; width: 100%; height: 100%;
+    }
+
+    .upload-icon {
+      font-size: 28px; margin-bottom: 10px;
+      display: block;
+    }
+
+    .upload-zone p {
+      font-size: 13px; color: var(--text-dim);
+      font-family: var(--mono);
+    }
+
+    .upload-zone p span {
+      color: var(--accent);
+    }
+
+    .ext-tags {
+      margin-top: 10px;
+      display: flex; gap: 6px; justify-content: center; flex-wrap: wrap;
+    }
+
+    .ext-tag {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--text-dim);
+      background: var(--border);
+      padding: 2px 8px;
+      border-radius: 3px;
+    }
+
+    /* ---------- Button ---------- */
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 20px;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      font-family: var(--mono);
+      font-size: 13px;
+      font-weight: 500;
+      transition: opacity 0.15s, transform 0.1s;
+    }
+
+    .btn:active { transform: scale(0.98); }
+    .btn:disabled { opacity: 0.45; cursor: not-allowed; }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+    .btn-primary:hover:not(:disabled) { opacity: 0.88; }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-dim);
+      border: 1px solid var(--border);
+    }
+    .btn-ghost:hover:not(:disabled) { color: var(--text); border-color: #3a3a5a; }
+
+    /* ---------- Doc list ---------- */
+    .doc-item {
+      display: flex; align-items: center; gap: 12px;
+      padding: 10px 14px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      margin-bottom: 8px;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+    }
+
+    .doc-item:hover { border-color: #3a3a5a; }
+
+    .doc-item.selected {
+      border-color: var(--accent);
+      background: var(--accent-dim);
+    }
+
+    .doc-icon { font-size: 18px; }
+
+    .doc-info { flex: 1; min-width: 0; }
+    .doc-name {
+      font-size: 13px;
+      font-family: var(--mono);
+      color: var(--text-bright);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .doc-meta { font-size: 11px; color: var(--text-dim); margin-top: 2px; }
+
+    .doc-check {
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      border: 1.5px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 10px;
+      flex-shrink: 0;
+    }
+
+    .doc-item.selected .doc-check {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 24px;
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--text-dim);
+    }
+
+    /* ---------- Ask ---------- */
+    .ask-row {
+      display: flex; gap: 10px; align-items: flex-end;
+    }
+
+    .input-wrap { flex: 1; }
+
+    .input-wrap label {
+      display: block;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 8px;
+    }
+
+    textarea, input[type=text] {
+      width: 100%;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text);
+      font-family: var(--mono);
+      font-size: 13px;
+      padding: 10px 14px;
+      outline: none;
+      resize: vertical;
+      line-height: 1.5;
+      transition: border-color 0.15s;
+    }
+
+    textarea:focus, input[type=text]:focus {
+      border-color: var(--accent);
+    }
+
+    textarea { min-height: 72px; }
+
+    /* ---------- Answer ---------- */
+    .answer-block {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 16px;
+      font-size: 14px;
+      line-height: 1.7;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .answer-block.loading {
+      color: var(--text-dim);
+      font-family: var(--mono);
+      font-size: 12px;
+    }
+
+    /* ---------- Sources ---------- */
+    .sources-toggle {
+      display: flex; align-items: center; gap: 6px;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--text-dim);
+      cursor: pointer;
+      background: none; border: none;
+      padding: 0; margin-top: 14px;
+    }
+    .sources-toggle:hover { color: var(--text); }
+
+    .sources-list {
+      margin-top: 10px;
+      display: flex; flex-direction: column; gap: 8px;
+    }
+
+    .source-chunk {
+      background: var(--bg);
+      border-left: 3px solid var(--accent);
+      border-radius: 0 6px 6px 0;
+      padding: 10px 14px;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--text-dim);
+      line-height: 1.6;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .source-meta {
+      font-size: 10px;
+      color: var(--accent);
+      margin-bottom: 4px;
+    }
+
+    /* ---------- Toast ---------- */
+    .toast-wrap {
+      position: fixed; bottom: 24px; right: 24px;
+      display: flex; flex-direction: column; gap: 10px;
+      z-index: 100;
+    }
+
+    .toast {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--text);
+      min-width: 240px;
+      animation: slideIn 0.2s ease;
+      display: flex; align-items: center; gap: 10px;
+    }
+
+    .toast.success { border-color: var(--green); }
+    .toast.error { border-color: var(--red); }
+
+    @keyframes slideIn {
+      from { transform: translateX(40px); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    /* ---------- Spinner ---------- */
+    .spinner {
+      width: 14px; height: 14px;
+      border: 2px solid var(--border);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      flex-shrink: 0;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ---------- Divider ---------- */
+    .actions-row {
+      display: flex; gap: 8px; margin-top: 14px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo-mark">QA</div>
+  <h1>DocQA / Document Intelligence</h1>
+  <div class="status-pill">
+    <span class="status-dot"></span>
+    <span id="status-text">connecting…</span>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- Upload -->
+  <div class="card">
+    <div class="card-header"><span class="icon">⬆</span> Ingest Document</div>
+    <div class="card-body">
+      <div class="upload-zone" id="drop-zone">
+        <input type="file" id="file-input" accept=".pdf,.docx,.txt,.md,.csv" />
+        <span class="upload-icon">📄</span>
+        <p>Drop a file here or <span>click to browse</span></p>
+        <div class="ext-tags">
+          <span class="ext-tag">.pdf</span>
+          <span class="ext-tag">.docx</span>
+          <span class="ext-tag">.txt</span>
+          <span class="ext-tag">.md</span>
+          <span class="ext-tag">.csv</span>
+        </div>
+      </div>
+      <div class="actions-row">
+        <button class="btn btn-primary" id="ingest-btn" disabled>
+          <span>Ingest</span>
+        </button>
+        <span id="file-label" style="font-family:var(--mono);font-size:12px;color:var(--text-dim);align-self:center;"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Documents -->
+  <div class="card">
+    <div class="card-header"><span class="icon">🗂</span> Loaded Documents</div>
+    <div class="card-body" id="doc-list-body">
+      <div class="empty-state">No documents ingested yet.</div>
+    </div>
+  </div>
+
+  <!-- Ask -->
+  <div class="card">
+    <div class="card-header"><span class="icon">💬</span> Ask a Question</div>
+    <div class="card-body">
+      <div class="input-wrap">
+        <label>Your question</label>
+        <textarea id="question-input" placeholder="What does the document say about refunds?" rows="3"></textarea>
+      </div>
+      <div class="actions-row">
+        <button class="btn btn-primary" id="ask-btn">Ask</button>
+        <button class="btn btn-ghost" id="clear-btn">Clear</button>
+      </div>
+
+      <div id="answer-area" style="margin-top:20px; display:none;">
+        <label style="display:block;font-family:var(--mono);font-size:11px;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px;">Answer</label>
+        <div class="answer-block" id="answer-text"></div>
+        <button class="sources-toggle" id="sources-toggle" style="display:none;">▸ Show sources</button>
+        <div class="sources-list" id="sources-list" style="display:none;"></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="toast-wrap" id="toast-wrap"></div>
+
+<script>
+  const API = '';  // same origin
+  let selectedDocId = null;
+  let selectedFile = null;
+  let sourcesVisible = false;
+
+  // ---- Health ----
+  async function checkHealth() {
+    try {
+      const r = await fetch(`${API}/health`);
+      const d = await r.json();
+      document.getElementById('status-text').textContent =
+        `${d.documents_loaded} doc${d.documents_loaded !== 1 ? 's' : ''} · ${d.total_chunks} chunks`;
+    } catch {
+      document.getElementById('status-text').textContent = 'offline';
+    }
+  }
+
+  // ---- Documents ----
+  async function loadDocuments() {
+    try {
+      const r = await fetch(`${API}/documents`);
+      const d = await r.json();
+      renderDocList(d.documents || []);
+    } catch {}
+  }
+
+  function renderDocList(docs) {
+    const el = document.getElementById('doc-list-body');
+    if (!docs.length) {
+      el.innerHTML = '<div class="empty-state">No documents ingested yet.</div>';
+      return;
+    }
+    el.innerHTML = docs.map(doc => `
+      <div class="doc-item ${selectedDocId === doc.document_id ? 'selected' : ''}"
+           data-id="${doc.document_id}" onclick="selectDoc('${doc.document_id}')">
+        <span class="doc-icon">📑</span>
+        <div class="doc-info">
+          <div class="doc-name">${escHtml(doc.filename)}</div>
+          <div class="doc-meta">${doc.chunk_count} chunks · ${doc.document_id.slice(0,8)}…</div>
+        </div>
+        <div class="doc-check">${selectedDocId === doc.document_id ? '✓' : ''}</div>
+      </div>
+    `).join('');
+  }
+
+  function selectDoc(id) {
+    selectedDocId = selectedDocId === id ? null : id;
+    loadDocuments();
+  }
+
+  // ---- File upload ----
+  const fileInput = document.getElementById('file-input');
+  const dropZone = document.getElementById('drop-zone');
+  const ingestBtn = document.getElementById('ingest-btn');
+  const fileLabel = document.getElementById('file-label');
+
+  fileInput.addEventListener('change', () => {
+    selectedFile = fileInput.files[0] || null;
+    fileLabel.textContent = selectedFile ? selectedFile.name : '';
+    ingestBtn.disabled = !selectedFile;
+  });
+
+  dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag-over'); });
+  dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
+  dropZone.addEventListener('drop', e => {
+    e.preventDefault(); dropZone.classList.remove('drag-over');
+    const f = e.dataTransfer.files[0];
+    if (f) { selectedFile = f; fileLabel.textContent = f.name; ingestBtn.disabled = false; }
+  });
+
+  ingestBtn.addEventListener('click', async () => {
+    if (!selectedFile) return;
+    ingestBtn.disabled = true;
+    ingestBtn.innerHTML = '<span class="spinner"></span> Ingesting…';
+
+    const form = new FormData();
+    form.append('file', selectedFile);
+
+    try {
+      const r = await fetch(`${API}/ingest`, { method: 'POST', body: form });
+      const d = await r.json();
+      if (r.ok) {
+        toast(`✓ ${d.filename} ingested — ${d.chunks_created} chunks`, 'success');
+        selectedFile = null;
+        fileLabel.textContent = '';
+        fileInput.value = '';
+        await loadDocuments();
+        await checkHealth();
+      } else {
+        toast(`✗ ${d.detail || 'Ingest failed'}`, 'error');
+      }
+    } catch (e) {
+      toast('✗ Network error', 'error');
+    } finally {
+      ingestBtn.disabled = false;
+      ingestBtn.innerHTML = '<span>Ingest</span>';
+    }
+  });
+
+  // ---- Ask ----
+  const askBtn = document.getElementById('ask-btn');
+  const clearBtn = document.getElementById('clear-btn');
+  const questionInput = document.getElementById('question-input');
+
+  questionInput.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) askBtn.click();
+  });
+
+  askBtn.addEventListener('click', async () => {
+    const q = questionInput.value.trim();
+    if (!q) { toast('Enter a question first', 'error'); return; }
+
+    askBtn.disabled = true;
+    askBtn.innerHTML = '<span class="spinner"></span> Thinking…';
+
+    const answerArea = document.getElementById('answer-area');
+    const answerText = document.getElementById('answer-text');
+    answerArea.style.display = 'block';
+    answerText.className = 'answer-block loading';
+    answerText.textContent = 'Retrieving context and generating answer…';
+    document.getElementById('sources-toggle').style.display = 'none';
+    document.getElementById('sources-list').style.display = 'none';
+    sourcesVisible = false;
+
+    try {
+      const payload = { question: q };
+      if (selectedDocId) payload.document_id = selectedDocId;
+
+      const r = await fetch(`${API}/ask`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+
+      const d = await r.json();
+
+      if (r.ok) {
+        answerText.className = 'answer-block';
+        answerText.textContent = d.answer;
+
+        if (d.sources && d.sources.length) {
+          const toggle = document.getElementById('sources-toggle');
+          toggle.style.display = 'flex';
+          renderSources(d.sources);
+        }
+      } else {
+        answerText.className = 'answer-block';
+        answerText.textContent = `Error: ${d.detail || 'Unknown error'}`;
+      }
+    } catch {
+      answerText.textContent = 'Network error. Is the server running?';
+    } finally {
+      askBtn.disabled = false;
+      askBtn.innerHTML = 'Ask';
+    }
+  });
+
+  clearBtn.addEventListener('click', () => {
+    questionInput.value = '';
+    document.getElementById('answer-area').style.display = 'none';
+  });
+
+  // ---- Sources ----
+  function renderSources(sources) {
+    const list = document.getElementById('sources-list');
+    list.innerHTML = sources.map((s, i) => `
+      <div class="source-chunk">
+        <div class="source-meta">Excerpt ${i + 1} · chunk #${s.chunk_index} · score ${s.score.toFixed(3)}</div>
+        ${escHtml(s.text.slice(0, 400))}${s.text.length > 400 ? '…' : ''}
+      </div>
+    `).join('');
+  }
+
+  document.getElementById('sources-toggle').addEventListener('click', function() {
+    sourcesVisible = !sourcesVisible;
+    document.getElementById('sources-list').style.display = sourcesVisible ? 'flex' : 'none';
+    this.textContent = (sourcesVisible ? '▾ Hide' : '▸ Show') + ' sources';
+  });
+
+  // ---- Toast ----
+  function toast(msg, type = '') {
+    const el = document.createElement('div');
+    el.className = `toast ${type}`;
+    el.textContent = msg;
+    document.getElementById('toast-wrap').appendChild(el);
+    setTimeout(() => el.remove(), 4000);
+  }
+
+  function escHtml(s) {
+    return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  // ---- Init ----
+  checkHealth();
+  loadDocuments();
+</script>
+</body>
+</html>
