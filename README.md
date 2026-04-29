@@ -9,7 +9,8 @@ A clean, production-structured backend that lets you upload documents and ask na
 ### 1. Prerequisites
 
 - Python 3.11+
-- An [Anthropic API key](https://console.anthropic.com/) (used for both Voyage embeddings and Claude)
+- An [Anthropic API key](https://console.anthropic.com/) (used for Claude answer generation)
+- No additional API keys required — embeddings run locally via `sentence-transformers`
 
 ### 2. Clone & Install
 
@@ -176,9 +177,9 @@ Exact brute-force search is the right call for document-scale corpora (typically
 
 Chunking by word count approximates token count without needing a tokeniser at runtime. 50-word overlap ensures that sentences spanning a chunk boundary still appear in at least one chunk's full context.
 
-**Voyage embeddings via Anthropic SDK**
+**Local embeddings via sentence-transformers**
 
-Voyage-3 (1024-dim) consistently outperforms OpenAI's ada-002 on retrieval benchmarks and integrates cleanly via the same Anthropic client, keeping the dependency surface small.
+`all-MiniLM-L6-v2` (384-dim) runs entirely on CPU with no API key or billing. The model (~90 MB) is downloaded once on first use and cached locally by the `sentence-transformers` library.
 
 **Singleton pipeline with thread-safe lazy init**
 
