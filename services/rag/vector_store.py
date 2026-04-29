@@ -113,6 +113,21 @@ class VectorStore:
     # Ingestion
     # ------------------------------------------------------------------
 
+    def _delete_document(self, document_id: str) -> None:
+        import shutil
+
+        self._documents.pop(document_id, None)
+        if self._persist_dir:
+            doc_dir = self._doc_dir(document_id)
+            if doc_dir.exists():
+                shutil.rmtree(doc_dir)
+
+    def clear_all(self) -> None:
+        """Remove all documents from memory and disk."""
+        for doc_id in list(self._documents.keys()):
+            self._delete_document(doc_id)
+        logger.info("Cleared all documents from store")
+
     def add_document(
         self,
         filename: str,

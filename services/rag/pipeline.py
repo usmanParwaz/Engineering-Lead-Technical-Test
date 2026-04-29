@@ -50,6 +50,9 @@ class RAGPipeline:
         """
         logger.info(f"Ingesting '{filename}' ({len(file_bytes)} bytes)")
 
+        # Clear any previously stored documents before indexing the new one
+        self.vector_store.clear_all()
+
         # 1. Extract text
         text = extract_text(file_bytes, filename)
         if not text.strip():
